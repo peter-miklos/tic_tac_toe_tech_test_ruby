@@ -4,6 +4,7 @@ class Game
     @players = [player_1, player_2]
     @grid = Array.new(3){Array.new(3)}
     @winner = nil
+    @players_in_turns = []
   end
 
   def player_1
@@ -16,13 +17,20 @@ class Game
 
   def play(player, x, y)
     raise "Game Over" if game_over?
+    raise "Invalid player" unless valid_player?(player)
     raise "Invalid choice" unless valid_choice?(x, y)
+    
+    @players_in_turns << player
   end
 
   private
 
   def game_over?
     !@grid.flatten.include?(nil) || @winner != nil
+  end
+
+  def valid_player?(player)
+    @players_in_turns.empty? || @players_in_turns.last != player
   end
 
   def valid_choice?(x, y)

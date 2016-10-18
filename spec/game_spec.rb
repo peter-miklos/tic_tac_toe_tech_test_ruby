@@ -28,6 +28,11 @@ describe Game do
       expect{game.play(player_1, 2, 5)}.to raise_error(RuntimeError)
     end
 
+    it "raises error if the same player wants to play the next turn too" do
+      game.play(player_1, 0, 1)
+      expect {game.play(player_1, 0, 2)}.to raise_error(RuntimeError)
+    end
+
   end
 
 
