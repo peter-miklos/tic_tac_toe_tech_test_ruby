@@ -60,6 +60,7 @@ class Game
     @grid[y][x] = player
     @players_in_turns << player
     @winner = player if player_wins?(player)
+    "#{player.name} won!" if @winner == player
   end
 
   def player_wins?(player)
