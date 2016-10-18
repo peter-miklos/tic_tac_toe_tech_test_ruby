@@ -29,6 +29,7 @@ class Game
     raise "Invalid choice" unless valid_choice?(x, y)
     @grid[y][x] = player
     @players_in_turns << player
+    @winner = player if player_won?(player)
   end
 
   private
@@ -51,6 +52,11 @@ class Game
 
   def position_available?(x, y)
     @grid[y][x] == nil
+  end
+
+  def player_won?(player)
+    @grid.include?([player, player, player]) || @grid.transpose.include?([player, player, player]) ||
+    (0..2).collect {|i| @grid[i][i] } == [player, player, player] || (0..2).collect { |i| @grid.reverse[i][i]} == [player, player, player]
   end
 
 end

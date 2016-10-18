@@ -33,6 +33,33 @@ describe Game do
       expect {game.play(player_1, 0, 2)}.to raise_error(RuntimeError)
     end
 
+    it "player_1 wins the game if all fields are claimed in a row" do
+      game.play(player_1, 0, 0)
+      game.play(player_2, 1, 1)
+      game.play(player_1, 1, 0)
+      game.play(player_2, 2, 1)
+      game.play(player_1, 2, 0)
+      expect(game.show_winner).to eq player_1
+    end
+
+    it "player_1 wins the game if all fields are claimed in a column" do
+      game.play(player_1, 0, 0)
+      game.play(player_2, 1, 1)
+      game.play(player_1, 0, 1)
+      game.play(player_2, 2, 1)
+      game.play(player_1, 0, 2)
+      expect(game.show_winner).to eq player_1
+    end
+
+    it "player_1 wins the game if all fields are claimed in diagonal" do
+      game.play(player_1, 0, 0)
+      game.play(player_2, 1, 0)
+      game.play(player_1, 1, 1)
+      game.play(player_2, 2, 1)
+      game.play(player_1, 2, 2)
+      expect(game.show_winner).to eq player_1
+    end
+
   end
 
   context "#show_grid" do
