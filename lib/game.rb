@@ -24,15 +24,17 @@ class Game
   end
 
   def play(player, x, y)
-    raise "Game Over" if game_over?
-    raise "Invalid player" unless valid_player?(player)
-    raise "Invalid choice" unless valid_choice?(x, y)
-    @grid[y][x] = player
-    @players_in_turns << player
-    @winner = player if player_won?(player)
+    run_validations(player, x, y)
+    complete_turn(player, x, y)
   end
 
   private
+
+  def run_validations(player, x, y)
+    raise "Game Over" if game_over?
+    raise "Invalid player" unless valid_player?(player)
+    raise "Invalid choice" unless valid_choice?(x, y)
+  end
 
   def game_over?
     !@grid.flatten.include?(nil) || @winner != nil
@@ -54,9 +56,28 @@ class Game
     @grid[y][x] == nil
   end
 
-  def player_won?(player)
-    @grid.include?([player, player, player]) || @grid.transpose.include?([player, player, player]) ||
-    (0..2).collect {|i| @grid[i][i] } == [player, player, player] || (0..2).collect { |i| @grid.reverse[i][i]} == [player, player, player]
+  def complete_turn(player, x, y)
+    @grid[y][x] = player
+    @players_in_turns << player
+    @winner = player if player_wins?(player)
+  end
+
+  def player_wins?(player)
+    wins_with_a_row?(player) || wins_with_a_column(player) || wins_with_a_diagonal(player)
+  end
+
+  def wins_with_a_row?(player)
+    @grid.include?(Array.new(3){player})
+  end
+
+  def wins_with_a_column(player)
+    @grid.transpose.include?(Array.new(3){player})
+  end
+
+  def wins_with_a_diagonal(player)
+    player_array = Array.new(3){player}
+    (0..2).map {|i| @grid[i][i] } == player_array ||
+    (0..2).map { |i| @grid.reverse[i][i]} == player_array
   end
 
 end
