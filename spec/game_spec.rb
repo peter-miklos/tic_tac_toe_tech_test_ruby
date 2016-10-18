@@ -18,5 +18,17 @@ describe Game do
     end
   end
 
+  context "#play" do
+    it "raises error if game is over" do
+      game.instance_variable_set(:@winner, player_1)
+      expect{game.play(player_1, 1, 1)}.to raise_error(RuntimeError)
+    end
+
+    it "raises error if coordinates are not valid" do
+      expect{game.play(player_1, 2, 5)}.to raise_error(RuntimeError)
+    end
+
+  end
+
 
 end
