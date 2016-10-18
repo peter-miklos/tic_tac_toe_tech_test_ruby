@@ -15,11 +15,19 @@ class Game
     @players.last
   end
 
+  def show_grid
+    @grid
+  end
+
+  def show_winner
+    @winner
+  end
+
   def play(player, x, y)
     raise "Game Over" if game_over?
     raise "Invalid player" unless valid_player?(player)
     raise "Invalid choice" unless valid_choice?(x, y)
-    
+    @grid[y][x] = player
     @players_in_turns << player
   end
 

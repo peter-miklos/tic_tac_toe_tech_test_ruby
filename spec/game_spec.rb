@@ -35,5 +35,19 @@ describe Game do
 
   end
 
+  context "#show_grid" do
+    it "returns the current grid" do
+      game.play(player_1, 2, 1)
+      expect(game.show_grid).to eq [[nil, nil, nil], [nil, nil, player_1], [nil, nil, nil]]
+    end
+  end
+
+  context "#show_winner" do
+    it "returns the winner, if there is any, otherwise nil" do
+      game.instance_variable_set(:@winner, player_2)
+      expect(game.show_winner).to eq player_2
+    end
+  end
+
 
 end
