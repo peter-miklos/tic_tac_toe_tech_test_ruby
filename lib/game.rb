@@ -2,10 +2,11 @@ class Game
 
   DEF_GRID_SIZE = 3
 
-  def initialize(player_1, player_2, grid_size: DEF_GRID_SIZE)
+  def initialize(player_1, player_2, grid_class: Grid, grid_size: DEF_GRID_SIZE)
     @players = [player_1, player_2]
+    @grid = grid_class.new(grid_size)
     @grid_size = grid_size
-    @grid = Array.new(grid_size){Array.new(grid_size)}
+    @grid_old = Array.new(grid_size){Array.new(grid_size)}
     @winner = nil
     @players_in_turns = []
 
@@ -20,7 +21,7 @@ class Game
   end
 
   def show_grid
-    @grid.dup
+    @grid.show_grid
   end
 
   def show_winner
@@ -37,31 +38,31 @@ class Game
   def run_validations(player, x, y)
     raise "Game Over" if game_over?
     raise "Invalid player" unless valid_player?(player)
-    raise "Invalid choice" unless valid_choice?(x, y)
+    raise "Invalid choice" unless @grid.valid_choice?(x, y)
   end
 
   def game_over?
-    !@grid.flatten.include?(nil) || @winner != nil
+    !@grid_old.flatten.include?(nil) || @winner != nil
   end
 
   def valid_player?(player)
     @players_in_turns.empty? || @players_in_turns.last != player
   end
 
-  def valid_choice?(x, y)
-    inside_grid?(x, y) && position_available?(x, y)
-  end
-
-  def inside_grid?(x, y)
-    x >= 0 && x < @grid_size && y >= 0 && y < @grid_size
-  end
-
-  def position_available?(x, y)
-    @grid[y][x] == nil
-  end
+  # def valid_choice?(x, y)
+  #   inside_grid?(x, y) && position_available?(x, y)
+  # end
+  #
+  # def inside_grid?(x, y)
+  #   x >= 0 && x < @grid_size && y >= 0 && y < @grid_size
+  # end
+  #
+  # def position_available?(x, y)
+  #   @grid_old[y][x] == nil
+  # end
 
   def complete_turn(player, x, y)
-    @grid[y][x] = player
+    @grid_old[y][x] = player
     @players_in_turns << player
     @winner = player if player_wins?(player)
     "#{player.name} won!" if @winner == player
@@ -72,17 +73,17 @@ class Game
   end
 
   def wins_with_a_row?(player)
-    @grid.include?(Array.new(@grid_size){player})
+    @grid_old.include?(Array.new(@grid_size){player})
   end
 
   def wins_with_a_column(player)
-    @grid.transpose.include?(Array.new(@grid_size){player})
+    @grid_old.transpose.include?(Array.new(@grid_size){player})
   end
 
   def wins_with_a_diagonal(player)
     player_array = Array.new(@grid_size){player}
-    (0...@grid_size).map {|i| @grid[i][i] } == player_array ||
-    (0...@grid_size).map { |i| @grid.reverse[i][i]} == player_array
+    (0...@grid_size).map {|i| @grid_old[i][i] } == player_array ||
+    (0...@grid_size).map { |i| @grid_old.reverse[i][i]} == player_array
   end
 
 end
