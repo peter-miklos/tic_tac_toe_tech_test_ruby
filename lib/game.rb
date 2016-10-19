@@ -1,10 +1,14 @@
 class Game
 
-  def initialize(player_1, player_2)
+  DEF_GRID_SIZE = 3
+
+  def initialize(player_1, player_2, grid_size: DEF_GRID_SIZE)
     @players = [player_1, player_2]
-    @grid = Array.new(3){Array.new(3)}
+    @grid_size = grid_size
+    @grid = Array.new(grid_size){Array.new(grid_size)}
     @winner = nil
     @players_in_turns = []
+
   end
 
   def player_1
@@ -49,7 +53,7 @@ class Game
   end
 
   def inside_grid?(x, y)
-    x >= 0 && x < @grid.length && y >= 0 && y < @grid.length
+    x >= 0 && x < @grid_size && y >= 0 && y < @grid_size
   end
 
   def position_available?(x, y)
@@ -68,17 +72,17 @@ class Game
   end
 
   def wins_with_a_row?(player)
-    @grid.include?(Array.new(3){player})
+    @grid.include?(Array.new(@grid_size){player})
   end
 
   def wins_with_a_column(player)
-    @grid.transpose.include?(Array.new(3){player})
+    @grid.transpose.include?(Array.new(@grid_size){player})
   end
 
   def wins_with_a_diagonal(player)
-    player_array = Array.new(3){player}
-    (0..2).map {|i| @grid[i][i] } == player_array ||
-    (0..2).map { |i| @grid.reverse[i][i]} == player_array
+    player_array = Array.new(@grid_size){player}
+    (0...@grid_size).map {|i| @grid[i][i] } == player_array ||
+    (0...@grid_size).map { |i| @grid.reverse[i][i]} == player_array
   end
 
 end
