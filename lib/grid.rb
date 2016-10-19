@@ -1,6 +1,8 @@
 class Grid
 
-  def initialize(grid_size)
+  DEF_GRID_SIZE = 3
+
+  def initialize(grid_size = DEF_GRID_SIZE)
     @grid_size = grid_size
     @grid_content = Array.new(grid_size){Array.new(grid_size)}
   end

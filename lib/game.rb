@@ -1,10 +1,10 @@
+require './lib/grid'
+
 class Game
 
-  DEF_GRID_SIZE = 3
-
-  def initialize(player_1, player_2, grid_class: Grid, grid_size: DEF_GRID_SIZE)
+  def initialize(player_1, player_2, grid: Grid.new)
     @players = [player_1, player_2]
-    @grid = grid_class.new(grid_size)
+    @grid = grid
     @winner = nil
     @players_in_turns = []
   end

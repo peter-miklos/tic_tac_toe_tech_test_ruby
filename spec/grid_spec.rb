@@ -4,7 +4,7 @@ describe Grid do
 
   let(:player_1) {double(:player_1, name: "John")}
   let(:player_2) {double(:player_2, name: "Jim")}
-  subject(:grid) {described_class.new(3)}
+  subject(:grid) {described_class.new}
 
   context "#claim_field" do
     it "add player to the claimed field" do
