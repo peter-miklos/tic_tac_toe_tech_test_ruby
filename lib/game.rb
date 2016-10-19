@@ -16,7 +16,7 @@ class Game
   end
 
   def show_grid
-    @grid
+    @grid.dup
   end
 
   def show_winner

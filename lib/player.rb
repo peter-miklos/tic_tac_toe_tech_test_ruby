@@ -1,3 +1,4 @@
+# Understands the player
 class Player
 
   def initialize(name)

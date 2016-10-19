@@ -60,15 +60,13 @@ describe Game do
       expect(game.show_winner).to eq player_1
     end
 
-    it "return confirms player that he/she won the game" do
+    it "confirms player that he/she won the game" do
       game.play(player_1, 0, 0)
       game.play(player_2, 1, 0)
       game.play(player_1, 1, 1)
       game.play(player_2, 2, 1)
       expect(game.play(player_1, 2, 2)).to eq("#{player_1.name} won!")
-
     end
-
   end
 
   context "#show_grid" do
