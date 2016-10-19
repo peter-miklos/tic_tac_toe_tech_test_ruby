@@ -24,6 +24,11 @@ describe Game do
       expect{game.play(player_1, 1, 1)}.to raise_error(RuntimeError)
     end
 
+    it "calls the grid_full? method on the grid" do
+      # expect(grid).to receive(:grid_full?)
+      game.play(player_1, 1, 1)
+    end
+
     it "raises error if coordinates are not valid" do
       expect{game.play(player_1, 2, 5)}.to raise_error(RuntimeError)
     end
@@ -31,33 +36,6 @@ describe Game do
     it "raises error if the same player wants to play the next turn too" do
       game.play(player_1, 0, 1)
       expect {game.play(player_1, 0, 2)}.to raise_error(RuntimeError)
-    end
-
-    it "player_1 wins the game if all fields are claimed in a row" do
-      game.play(player_1, 0, 0)
-      game.play(player_2, 1, 1)
-      game.play(player_1, 1, 0)
-      game.play(player_2, 2, 1)
-      game.play(player_1, 2, 0)
-      expect(game.show_winner).to eq player_1
-    end
-
-    it "player_1 wins the game if all fields are claimed in a column" do
-      game.play(player_1, 0, 0)
-      game.play(player_2, 1, 1)
-      game.play(player_1, 0, 1)
-      game.play(player_2, 2, 1)
-      game.play(player_1, 0, 2)
-      expect(game.show_winner).to eq player_1
-    end
-
-    it "player_1 wins the game if all fields are claimed in diagonal" do
-      game.play(player_1, 0, 0)
-      game.play(player_2, 1, 0)
-      game.play(player_1, 1, 1)
-      game.play(player_2, 2, 1)
-      game.play(player_1, 2, 2)
-      expect(game.show_winner).to eq player_1
     end
 
     it "confirms player that he/she won the game" do
@@ -70,7 +48,7 @@ describe Game do
   end
 
   context "#show_grid" do
-    it "returns the current grid" do
+    it "calls the show_grid method on grid" do
       # expect(grid).to receive(:show_grid)
       game.play(player_1, 2, 1)
     end

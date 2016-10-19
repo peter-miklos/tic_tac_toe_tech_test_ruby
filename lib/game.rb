@@ -42,7 +42,7 @@ class Game
   end
 
   def game_over?
-    !@grid_old.flatten.include?(nil) || @winner != nil
+    @grid.grid_full? || @winner != nil
   end
 
   def valid_player?(player)
@@ -62,28 +62,29 @@ class Game
   # end
 
   def complete_turn(player, x, y)
-    @grid_old[y][x] = player
+    # @grid_old[y][x] = player
+    @grid.claim_field(player, x, y)
     @players_in_turns << player
-    @winner = player if player_wins?(player)
+    @winner = player if @grid.player_wins?(player)
     "#{player.name} won!" if @winner == player
   end
 
-  def player_wins?(player)
-    wins_with_a_row?(player) || wins_with_a_column(player) || wins_with_a_diagonal(player)
-  end
-
-  def wins_with_a_row?(player)
-    @grid_old.include?(Array.new(@grid_size){player})
-  end
-
-  def wins_with_a_column(player)
-    @grid_old.transpose.include?(Array.new(@grid_size){player})
-  end
-
-  def wins_with_a_diagonal(player)
-    player_array = Array.new(@grid_size){player}
-    (0...@grid_size).map {|i| @grid_old[i][i] } == player_array ||
-    (0...@grid_size).map { |i| @grid_old.reverse[i][i]} == player_array
-  end
+  # def player_wins?(player)
+  #   wins_with_a_row?(player) || wins_with_a_column(player) || wins_with_a_diagonal(player)
+  # end
+  #
+  # def wins_with_a_row?(player)
+  #   @grid_old.include?(Array.new(@grid_size){player})
+  # end
+  #
+  # def wins_with_a_column(player)
+  #   @grid_old.transpose.include?(Array.new(@grid_size){player})
+  # end
+  #
+  # def wins_with_a_diagonal(player)
+  #   player_array = Array.new(@grid_size){player}
+  #   (0...@grid_size).map {|i| @grid_old[i][i] } == player_array ||
+  #   (0...@grid_size).map { |i| @grid_old.reverse[i][i]} == player_array
+  # end
 
 end
