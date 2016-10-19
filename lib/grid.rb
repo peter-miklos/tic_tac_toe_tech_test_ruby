@@ -22,7 +22,8 @@ class Grid
   end
 
   def player_wins?(player)
-    wins_with_a_row?(player) || wins_with_a_column(player) || wins_with_a_diagonal(player)
+    wins_with_a_row?(player) || wins_with_a_column(player) ||
+    wins_with_a_diagonal(player)
   end
 
   private

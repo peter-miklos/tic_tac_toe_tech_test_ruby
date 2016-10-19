@@ -19,7 +19,8 @@ describe Grid do
     end
 
     it "returns false if the field is taken" do
-
+      grid.claim_field(player_2, 2, 2)
+      expect(grid.valid_choice?(2, 2)).to be_falsy
     end
   end
 
@@ -32,7 +33,9 @@ describe Grid do
 
   context "#grid_full?" do
     it "returns true if there is no more empty field in the grid" do
-
+      other_grid = Grid.new(1)
+      other_grid.claim_field(player_1, 0, 0)
+      expect(other_grid.grid_full?).to be_truthy
     end
 
     it "returns false if there is still at least one empty field in the grid" do
@@ -41,7 +44,7 @@ describe Grid do
   end
 
   context "#player_wins?" do
-    it "player_1 wins the game if all fields are claimed in a row" do
+    it "returns true for player_1 if all fields are claimed in a row" do
       grid.claim_field(player_1, 0, 0)
       grid.claim_field(player_2, 1, 1)
       grid.claim_field(player_1, 1, 0)
@@ -50,7 +53,7 @@ describe Grid do
       expect(grid.player_wins?(player_1)).to be_truthy
     end
 
-    it "player_1 wins the game if all fields are claimed in a column" do
+    it "returns true for player_1 if all fields are claimed in a column" do
       grid.claim_field(player_1, 0, 0)
       grid.claim_field(player_2, 1, 1)
       grid.claim_field(player_1, 0, 1)
@@ -59,7 +62,7 @@ describe Grid do
       expect(grid.player_wins?(player_1)).to be_truthy
     end
 
-    it "player_1 wins the game if all fields are claimed in diagonal" do
+    it "returns true for player_1 if all fields are claimed in diagonal" do
       grid.claim_field(player_1, 0, 0)
       grid.claim_field(player_2, 1, 0)
       grid.claim_field(player_1, 1, 1)

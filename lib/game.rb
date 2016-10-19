@@ -5,8 +5,6 @@ class Game
   def initialize(player_1, player_2, grid_class: Grid, grid_size: DEF_GRID_SIZE)
     @players = [player_1, player_2]
     @grid = grid_class.new(grid_size)
-    @grid_size = grid_size
-    @grid_old = Array.new(grid_size){Array.new(grid_size)}
     @winner = nil
     @players_in_turns = []
 
