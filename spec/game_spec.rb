@@ -46,7 +46,11 @@ describe Game do
       expect {game.play(player_1, 0, 2)}.to raise_error(RuntimeError)
     end
 
-    it "confirms player that he/she won the game" do
+    it "confirms that the field is claimed" do
+      expect(game.play(player_1, 2, 2)).to eq("Field confirmed. Next turn.")
+    end
+
+    it "confirms that player won the game" do
       allow(grid).to receive(:player_wins?).and_return(true)
       expect(game.play(player_1, 2, 2)).to eq("#{player_1.name} won!")
     end

@@ -1,3 +1,4 @@
+# understands how the grid works
 class Grid
 
   DEF_GRID_SIZE = 3

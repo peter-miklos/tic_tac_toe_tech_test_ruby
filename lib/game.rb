@@ -1,3 +1,4 @@
+# understands how to interact with F/E
 require './lib/grid'
 
 class Game
@@ -50,6 +51,6 @@ class Game
     @grid.claim_field(player, x, y)
     @players_in_turns << player
     @winner = player if @grid.player_wins?(player)
-    "#{player.name} won!" if @winner == player
+    @winner == player ? "#{player.name} won!" : "Field confirmed. Next turn."
   end
 end
