@@ -1,4 +1,4 @@
-Tic Tac Toe Tech Test - in ruby
+Tic Tac Toe Tech Test - in Ruby
 =================
 
 Description:
